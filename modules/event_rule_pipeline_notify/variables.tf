@@ -3,13 +3,8 @@ variable "rule_name" {
   type        = string
 }
 
-variable "pipeline_arns" {
-  description = "List of AFT CodePipeline ARNs to monitor"
-  type        = list(string)
-}
-
 variable "sns_topic_arn" {
-  description = "ARN of the SNS topic to publish notifications"
+  description = "SNS Topic ARN to which EventBridge should send notifications"
   type        = string
 }
 
