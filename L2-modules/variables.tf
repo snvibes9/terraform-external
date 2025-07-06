@@ -5,12 +5,12 @@ variable "aws_region" {
 }
 
 variable "environment" {
-  description = "Environment name (e.g., dev, staging, prod)"
+  description = "Environment name (e.g., dev, uat, prod)"
   type        = string
   default     = "prod"
   validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "Environment must be one of: dev, staging, prod."
+    condition     = contains(["dev", "uat", "prod"], var.environment)
+    error_message = "Environment must be one of: dev, uat, prod."
   }
 }
 
