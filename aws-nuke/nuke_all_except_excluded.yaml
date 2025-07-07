@@ -1,0 +1,26 @@
+regions:
+  - us-west-1
+  - global
+account-blocklist:
+  - "999999999999" # Replace with your production account ID
+no-alias: true
+accounts:
+  "123456789012": # Replace with your target account ID
+    filters:
+      IAMUser:
+        - type: exact
+          property: UserName
+          value: "admin"
+      IAMUserPolicyAttachment:
+        - type: exact
+          value: "admin -> AdministratorAccess"
+      S3Bucket:
+        - type: glob
+          property: Name
+          value: "important-bucket-*"
+    resource-types:
+      targets:
+        - "*" # Delete all supported resources
+      excludes:
+        - IAMRole
+        - CloudTrailTrail

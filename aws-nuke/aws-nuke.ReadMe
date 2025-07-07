@@ -1,0 +1,41 @@
+AWS-Nuke Features and Capabilities
+aws-nuke is a powerful open-source tool designed to delete all resources in an AWS account, with fine-grained control over what to delete or preserve. Based on the provided search results and general knowledge of aws-nuke, its key features include:
+
+Resource Deletion: Supports deletion of a wide range of AWS resources, such as EC2 instances, S3 buckets, IAM roles, Lambda functions, RDS databases, and more.
+Configuration via YAML: Uses a YAML file to specify regions, accounts, resource types to include/exclude, and filters to preserve specific resources.
+Dry Run Mode: Allows simulation of deletion (--no-dry-run flag omitted) to list resources that would be deleted without making changes.
+Filters and Presets: Supports filtering resources by properties (e.g., tags, names) using types like exact, glob, or regex to exclude specific resources.
+Account Blacklist: Prevents accidental deletion in production accounts.
+No-Alias Check: Bypasses the requirement for an account alias with the --no-alias-check flag and corresponding YAML configuration.
+Force Deletion: The --force flag skips confirmation prompts, with a configurable sleep time (--force-sleep).
+Supported Platforms: Runs on Linux, Windows, and macOS, with Docker support for containerized execution.
+Resource Coverage: Covers most AWS resources but may not include all (e.g., certain new or region-specific services). The exact list depends on the version, but a comprehensive list can be obtained using aws-nuke resource-types.
+Template 1: Delete All Resources Except Excluded/Filtered Ones
+This template uses a wildcard (*) in the resource-types section to target all aws-nuke-supported resources for deletion, except those explicitly excluded or filtered. The no-alias parameter is included to bypass the account alias check.
+
+Explanation of Template 1
+Regions: Targets us-west-1 and global (for IAM and other global resources).
+Account Blocklist: Excludes a production account (replace 999999999999 with your production account ID).
+No-Alias: Set to true to bypass the account alias check.
+Accounts: Targets the specified account (replace 123456789012 with your account ID).
+Filters:
+Preserves the IAM user admin and its AdministratorAccess policy.
+Preserves S3 buckets matching the pattern important-bucket-*.
+Resource Types:
+targets: ["*"] includes all aws-nuke-supported resources for deletion.
+excludes prevents deletion of IAMRole and CloudTrailTrail resources.
+Template 2: Explicitly List All AWS-Nuke Supported Resources
+This template explicitly lists all resource types that aws-nuke can delete (based on typical resource coverage in aws-nuke documentation and search results). The no-alias parameter is included, and filters are added to preserve specific resources. The list of supported resources is derived from aws-nuke documentation and search results, covering common resource types as of the latest versions (e.g., v2.25.0).
+
+
+Explanation of Template 2
+Regions: Targets us-west-1 and global.
+Account Blocklist: Excludes a production account (replace 999999999999 with your production account ID).
+No-Alias: Set to true to bypass the account alias check.
+Accounts: Targets the specified account (replace 123456789012 with your account ID).
+Filters: Same as Template 1, preserving the admin IAM user, its policy, and S3 buckets matching important-bucket-*.
+Resource Types:
+targets lists specific aws-nuke-supported resource types, covering common AWS services like EC2, S3, IAM, Lambda, RDS, and more.
+excludes prevents deletion of IAMRole and CloudTrailTrail.
+Note: The list of resources is based on typical aws-nuke coverage (e.g., from search results and documentation). To get the exact list for your aws-nuke version, run aws-nuke resource-types.
+

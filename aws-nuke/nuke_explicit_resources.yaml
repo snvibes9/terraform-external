@@ -1,0 +1,66 @@
+regions:
+  - us-west-1
+  - global
+account-blocklist:
+  - "999999999999" # Replace with your production account ID
+no-alias: true
+accounts:
+  "123456789012": # Replace with your target account ID
+    filters:
+      IAMUser:
+        - type: exact
+          property: UserName
+          value: "admin"
+      IAMUserPolicyAttachment:
+        - type: exact
+          value: "admin -> AdministratorAccess"
+      S3Bucket:
+        - type: glob
+          property: Name
+          value: "important-bucket-*"
+    resource-types:
+      targets:
+        - ACMCertificate
+        - ACMPCACertificateAuthority
+        - APIGateway
+        - APIGatewayV2
+        - AutoScalingGroup
+        - CloudFormationStack
+        - CloudWatchAlarm
+        - CloudWatchEventsRule
+        - CloudWatchEventsTarget
+        - CloudWatchLogsLogGroup
+        - ConfigServiceConfigRule
+        - DynamoDBTable
+        - EC2Instance
+        - EC2KeyPair
+        - EC2SecurityGroup
+        - EC2Subnet
+        - EC2Volume
+        - EC2VPC
+        - EC2RouteTable
+        - EC2NetworkACL
+        - EC2InternetGateway
+        - EC2NATGateway
+        - EC2VPCEndpoint
+        - EC2DHCPOption
+        - EKSCluster
+        - ECSCluster
+        - ECSService
+        - ElasticLoadBalancer
+        - ElasticLoadBalancerV2
+        - IAMGroup
+        - IAMPolicy
+        - IAMRole
+        - IAMUser
+        - IAMUserAccessKey
+        - IAMUserPolicyAttachment
+        - LambdaFunction
+        - RDSInstance
+        - S3Bucket
+        - S3Object
+        - SNSQueue
+        - SNSTopic
+      excludes:
+        - IAMRole
+        - CloudTrailTrail

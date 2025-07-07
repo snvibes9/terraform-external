@@ -1,0 +1,60 @@
+Commands for Dry Run and Actual Deletion
+Below are the commands for running aws-nuke in both dry run and actual deletion modes, for Linux and Windows platforms. These commands assume aws-nuke is installed and AWS credentials are configured (e.g., via aws configure or environment variables). Replace aws-nuke-profile with your AWS profile name and 123456789012 with your account ID.
+
+Linux Commands
+Dry Run (Template 1):
+
+aws-nuke -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-alias-check
+
+Actual Deletion (Template 1):
+
+aws-nuke -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
+
+
+Dry Run (Template 2):
+
+aws-nuke -c nuke_explicit_resources.yaml --profile aws-nuke-profile --no-alias-check
+
+Actual Deletion (Template 2):
+
+aws-nuke -c nuke_explicit_resources.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
+
+
+Windows Commands
+Dry Run (Template 1):
+
+.\aws-nuke.exe -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-alias-check
+
+Actual Deletion (Template 1):
+
+.\aws-nuke.exe -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
+
+
+Dry Run (Template 2):
+
+.\aws-nuke.exe -c nuke_explicit_resources.yaml --profile aws-nuke-profile --no-alias-check
+
+Actual Deletion (Template 2):
+
+.\aws-nuke.exe -c nuke_explicit_resources.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
+
+
+Command Explanations
+Dry Run: Omits --no-dry-run, listing resources that would be deleted without making changes. Use this to verify the configuration.
+Actual Deletion: Includes --no-dry-run to perform deletion, --force to skip confirmation prompts, and --force-sleep 3 to set a 3-second delay after the initial prompt.
+** --no-alias-check**: Bypasses the account alias requirement, aligning with the no-alias: true setting in the YAML.
+Profile: Specifies the AWS CLI profile (aws-nuke-profile) for authentication. Alternatively, use --access-key-id and --secret-access-key for static credentials.
+Execution: On Linux, use ./aws-nuke if in the current directory, or ensure aws-nuke is in your PATH. On Windows, use .\aws-nuke.exe from the directory containing the binary or add it to your PATH.
+
+Additional Notes
+Safety: Always run in dry run mode first to review resources targeted for deletion. aws-nuke is highly destructive and should not be used in production environments. 
+Installation:
+Linux: Download and extract the binary (e.g., wget -c https://github.com/rebuy-de/aws-nuke/releases/download/v2.25.0/aws-nuke-v2.25.0-linux-amd64.tar.gz, tar -zxf, chmod +x aws-nuke).
+Windows: Download the Windows binary from the aws-nuke releases page and place it in a directory accessible by PowerShell or Command Prompt. 
+Resource Coverage: The list in Template 2 is comprehensive but may not cover all resources in newer aws-nuke versions. Use aws-nuke resource-types to get the exact list for your version. 
+Dependencies: aws-nuke retries deletions to handle dependencies but may fail on resources with complex dependencies (e.g., default VPCs, RDS instances with Neptune/DocumentDB). 
+Best Practices:
+Use a dedicated test account to avoid accidental deletion of critical resources.
+Store configurations in version control and test thoroughly.
+Consider using aws-nuke with AWS Organizations and assume-role for multi-account setups. 
+Limitations: Some resources (e.g., AWS Backup-managed AMIs) cannot be deleted via standard APIs and may require manual intervention.
