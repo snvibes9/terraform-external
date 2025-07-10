@@ -21,8 +21,7 @@ locals {
     Project     = "AFT-Pipeline-Notifications"
     Environment = "Internal"
     CostCenter  = ""
-    ManagedBy   = "terraform"
-  }
+ }
 }
 
 variable "topic_name" {
@@ -67,7 +66,7 @@ resource "aws_sns_topic" "this" {
   name = var.topic_name
 
   tags = merge(var.tags, local.common_tags, {
-    "Createdby" = "terraform"
+    "Createdby" = "AFT"
   })
 }
 
@@ -115,7 +114,7 @@ resource "aws_cloudwatch_event_rule" "this" {
   })
 
   tags = merge(var.tags, local.common_tags, {
-    "Createdby" = "terraform"
+    "Createdby" = "AFT"
   })
 }
 
@@ -124,7 +123,7 @@ resource "aws_iam_role" "eventbridge_invoke_sns" {
   assume_role_policy = data.aws_iam_policy_document.eventbridge_trust.json
 
   tags = merge(var.tags, local.common_tags, {
-    "Createdby" = "terraform"
+    "Createdby" = "AFT"
   })
 }
 
