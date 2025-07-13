@@ -23,11 +23,11 @@ aws-nuke -c nuke_explicit_resources.yaml --profile aws-nuke-profile --no-dry-run
 Windows Commands
 Dry Run (Template 1):
 
-.\aws-nuke.exe -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-alias-check
+.\aws-nuke run -c config.yaml --profile aws-nuke-profile --no-alias-check=false
 
 Actual Deletion (Template 1):
 
-.\aws-nuke.exe -c nuke_all_except_excluded.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
+.\aws-nuke run -c config.yaml --profile aws-nuke-profile --no-dry-run --no-alias-check --force --force-sleep 3
 
 
 Dry Run (Template 2):
